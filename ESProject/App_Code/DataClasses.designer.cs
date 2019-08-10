@@ -21,7 +21,7 @@ using System.Reflection;
 
 
 
-[global::System.Data.Linq.Mapping.DatabaseAttribute(Name="CPProject")]
+[global::System.Data.Linq.Mapping.DatabaseAttribute(Name="RDSICA")]
 public partial class DataClassesDataContext : System.Data.Linq.DataContext
 {
 	
@@ -50,7 +50,7 @@ public partial class DataClassesDataContext : System.Data.Linq.DataContext
   #endregion
 	
 	public DataClassesDataContext() : 
-			base(global::System.Configuration.ConfigurationManager.ConnectionStrings["CPProjectConnectionString"].ConnectionString, mappingSource)
+			base(global::System.Configuration.ConfigurationManager.ConnectionStrings["ConnectionString1"].ConnectionString, mappingSource)
 	{
 		OnCreated();
 	}
@@ -134,7 +134,7 @@ public partial class Booking : INotifyPropertyChanging, INotifyPropertyChanged
 	
 	private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
 	
-	private int _BookingID;
+	private string _BookingID;
 	
 	private string _CarStockID;
 	
@@ -146,17 +146,17 @@ public partial class Booking : INotifyPropertyChanging, INotifyPropertyChanged
 	
 	private string _ReturnDate;
 	
-	private EntityRef<CarStock> _CarStock;
+	private EntityRef<Transaction> _Transaction;
 	
 	private EntityRef<Customer> _Customer;
 	
-	private EntityRef<Transaction> _Transaction;
+	private EntityRef<CarStock> _CarStock;
 	
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
     partial void OnCreated();
-    partial void OnBookingIDChanging(int value);
+    partial void OnBookingIDChanging(string value);
     partial void OnBookingIDChanged();
     partial void OnCarStockIDChanging(string value);
     partial void OnCarStockIDChanged();
@@ -172,14 +172,14 @@ public partial class Booking : INotifyPropertyChanging, INotifyPropertyChanged
 	
 	public Booking()
 	{
-		this._CarStock = default(EntityRef<CarStock>);
-		this._Customer = default(EntityRef<Customer>);
 		this._Transaction = default(EntityRef<Transaction>);
+		this._Customer = default(EntityRef<Customer>);
+		this._CarStock = default(EntityRef<CarStock>);
 		OnCreated();
 	}
 	
-	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BookingID", DbType="Int NOT NULL", IsPrimaryKey=true)]
-	public int BookingID
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BookingID", DbType="VarChar(50) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
+	public string BookingID
 	{
 		get
 		{
@@ -198,7 +198,7 @@ public partial class Booking : INotifyPropertyChanging, INotifyPropertyChanged
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CarStockID", DbType="NChar(10)")]
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CarStockID", DbType="VarChar(50)")]
 	public string CarStockID
 	{
 		get
@@ -222,7 +222,7 @@ public partial class Booking : INotifyPropertyChanging, INotifyPropertyChanged
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CustomerID", DbType="NChar(10)")]
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CustomerID", DbType="VarChar(50)")]
 	public string CustomerID
 	{
 		get
@@ -246,7 +246,7 @@ public partial class Booking : INotifyPropertyChanging, INotifyPropertyChanged
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TransactionID", DbType="NChar(10)")]
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TransactionID", DbType="VarChar(50)")]
 	public string TransactionID
 	{
 		get
@@ -270,7 +270,7 @@ public partial class Booking : INotifyPropertyChanging, INotifyPropertyChanged
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BorrowDate", DbType="NChar(10)")]
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BorrowDate", DbType="VarChar(50)")]
 	public string BorrowDate
 	{
 		get
@@ -290,7 +290,7 @@ public partial class Booking : INotifyPropertyChanging, INotifyPropertyChanged
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ReturnDate", DbType="NChar(10)")]
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ReturnDate", DbType="VarChar(50)")]
 	public string ReturnDate
 	{
 		get
@@ -310,36 +310,36 @@ public partial class Booking : INotifyPropertyChanging, INotifyPropertyChanged
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.AssociationAttribute(Name="CarStock_Booking", Storage="_CarStock", ThisKey="CarStockID", OtherKey="CarStockID", IsForeignKey=true)]
-	public CarStock CarStock
+	[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Transaction_Booking", Storage="_Transaction", ThisKey="TransactionID", OtherKey="TransactionID", IsForeignKey=true)]
+	public Transaction Transaction
 	{
 		get
 		{
-			return this._CarStock.Entity;
+			return this._Transaction.Entity;
 		}
 		set
 		{
-			CarStock previousValue = this._CarStock.Entity;
+			Transaction previousValue = this._Transaction.Entity;
 			if (((previousValue != value) 
-						|| (this._CarStock.HasLoadedOrAssignedValue == false)))
+						|| (this._Transaction.HasLoadedOrAssignedValue == false)))
 			{
 				this.SendPropertyChanging();
 				if ((previousValue != null))
 				{
-					this._CarStock.Entity = null;
+					this._Transaction.Entity = null;
 					previousValue.Bookings.Remove(this);
 				}
-				this._CarStock.Entity = value;
+				this._Transaction.Entity = value;
 				if ((value != null))
 				{
 					value.Bookings.Add(this);
-					this._CarStockID = value.CarStockID;
+					this._TransactionID = value.TransactionID;
 				}
 				else
 				{
-					this._CarStockID = default(string);
+					this._TransactionID = default(string);
 				}
-				this.SendPropertyChanged("CarStock");
+				this.SendPropertyChanged("Transaction");
 			}
 		}
 	}
@@ -378,36 +378,36 @@ public partial class Booking : INotifyPropertyChanging, INotifyPropertyChanged
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Transaction_Booking", Storage="_Transaction", ThisKey="TransactionID", OtherKey="TransactionID", IsForeignKey=true)]
-	public Transaction Transaction
+	[global::System.Data.Linq.Mapping.AssociationAttribute(Name="CarStock_Booking", Storage="_CarStock", ThisKey="CarStockID", OtherKey="CarStockID", IsForeignKey=true)]
+	public CarStock CarStock
 	{
 		get
 		{
-			return this._Transaction.Entity;
+			return this._CarStock.Entity;
 		}
 		set
 		{
-			Transaction previousValue = this._Transaction.Entity;
+			CarStock previousValue = this._CarStock.Entity;
 			if (((previousValue != value) 
-						|| (this._Transaction.HasLoadedOrAssignedValue == false)))
+						|| (this._CarStock.HasLoadedOrAssignedValue == false)))
 			{
 				this.SendPropertyChanging();
 				if ((previousValue != null))
 				{
-					this._Transaction.Entity = null;
+					this._CarStock.Entity = null;
 					previousValue.Bookings.Remove(this);
 				}
-				this._Transaction.Entity = value;
+				this._CarStock.Entity = value;
 				if ((value != null))
 				{
 					value.Bookings.Add(this);
-					this._TransactionID = value.TransactionID;
+					this._CarStockID = value.CarStockID;
 				}
 				else
 				{
-					this._TransactionID = default(string);
+					this._CarStockID = default(string);
 				}
-				this.SendPropertyChanged("Transaction");
+				this.SendPropertyChanged("CarStock");
 			}
 		}
 	}
@@ -469,7 +469,7 @@ public partial class Branch : INotifyPropertyChanging, INotifyPropertyChanged
 		OnCreated();
 	}
 	
-	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BranchID", DbType="NChar(10)", CanBeNull=false, IsPrimaryKey=true)]
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BranchID", DbType="VarChar(50) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
 	public string BranchID
 	{
 		get
@@ -489,7 +489,7 @@ public partial class Branch : INotifyPropertyChanging, INotifyPropertyChanged
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ContackNumber", DbType="NChar(10)")]
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ContackNumber", DbType="VarChar(50)")]
 	public string ContackNumber
 	{
 		get
@@ -509,7 +509,7 @@ public partial class Branch : INotifyPropertyChanging, INotifyPropertyChanged
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Address", DbType="NChar(10)")]
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Address", DbType="VarChar(50)")]
 	public string Address
 	{
 		get
@@ -529,7 +529,7 @@ public partial class Branch : INotifyPropertyChanging, INotifyPropertyChanged
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PersonIncharge", DbType="NChar(10)")]
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PersonIncharge", DbType="VarChar(50)")]
 	public string PersonIncharge
 	{
 		get
@@ -639,7 +639,7 @@ public partial class CarModel : INotifyPropertyChanging, INotifyPropertyChanged
 		OnCreated();
 	}
 	
-	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CarModelID", DbType="NChar(10)", IsPrimaryKey=true)]
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CarModelID", DbType="VarChar(50) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
 	public string CarModelID
 	{
 		get
@@ -679,7 +679,7 @@ public partial class CarModel : INotifyPropertyChanging, INotifyPropertyChanged
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CarPlate", DbType="NChar(10)")]
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CarPlate", DbType="VarChar(50)")]
 	public string CarPlate
 	{
 		get
@@ -699,7 +699,7 @@ public partial class CarModel : INotifyPropertyChanging, INotifyPropertyChanged
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CarCapacity", DbType="NChar(10)")]
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CarCapacity", DbType="VarChar(50)")]
 	public string CarCapacity
 	{
 		get
@@ -719,7 +719,7 @@ public partial class CarModel : INotifyPropertyChanging, INotifyPropertyChanged
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DailyRental", DbType="NChar(10)")]
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DailyRental", DbType="VarChar(50)")]
 	public string DailyRental
 	{
 		get
@@ -739,7 +739,7 @@ public partial class CarModel : INotifyPropertyChanging, INotifyPropertyChanged
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Deposit", DbType="NChar(10)")]
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Deposit", DbType="VarChar(50)")]
 	public string Deposit
 	{
 		get
@@ -821,9 +821,9 @@ public partial class CarStock : INotifyPropertyChanging, INotifyPropertyChanged
 	
 	private EntitySet<Booking> _Bookings;
 	
-	private EntityRef<CarModel> _CarModel;
-	
 	private EntityRef<Branch> _Branch;
+	
+	private EntityRef<CarModel> _CarModel;
 	
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -842,12 +842,12 @@ public partial class CarStock : INotifyPropertyChanging, INotifyPropertyChanged
 	public CarStock()
 	{
 		this._Bookings = new EntitySet<Booking>(new Action<Booking>(this.attach_Bookings), new Action<Booking>(this.detach_Bookings));
-		this._CarModel = default(EntityRef<CarModel>);
 		this._Branch = default(EntityRef<Branch>);
+		this._CarModel = default(EntityRef<CarModel>);
 		OnCreated();
 	}
 	
-	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CarStockID", DbType="NChar(10)", CanBeNull=false, IsPrimaryKey=true)]
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CarStockID", DbType="VarChar(50) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
 	public string CarStockID
 	{
 		get
@@ -867,7 +867,7 @@ public partial class CarStock : INotifyPropertyChanging, INotifyPropertyChanged
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BranchID", DbType="NChar(10)")]
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BranchID", DbType="VarChar(50)")]
 	public string BranchID
 	{
 		get
@@ -891,7 +891,7 @@ public partial class CarStock : INotifyPropertyChanging, INotifyPropertyChanged
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CarModelID", DbType="NChar(10)")]
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CarModelID", DbType="VarChar(50)")]
 	public string CarModelID
 	{
 		get
@@ -915,7 +915,7 @@ public partial class CarStock : INotifyPropertyChanging, INotifyPropertyChanged
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Avaliability", DbType="NChar(10)")]
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Avaliability", DbType="VarChar(50)")]
 	public string Avaliability
 	{
 		get
@@ -945,40 +945,6 @@ public partial class CarStock : INotifyPropertyChanging, INotifyPropertyChanged
 		set
 		{
 			this._Bookings.Assign(value);
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.AssociationAttribute(Name="CarModel_CarStock", Storage="_CarModel", ThisKey="CarModelID", OtherKey="CarModelID", IsForeignKey=true)]
-	public CarModel CarModel
-	{
-		get
-		{
-			return this._CarModel.Entity;
-		}
-		set
-		{
-			CarModel previousValue = this._CarModel.Entity;
-			if (((previousValue != value) 
-						|| (this._CarModel.HasLoadedOrAssignedValue == false)))
-			{
-				this.SendPropertyChanging();
-				if ((previousValue != null))
-				{
-					this._CarModel.Entity = null;
-					previousValue.CarStocks.Remove(this);
-				}
-				this._CarModel.Entity = value;
-				if ((value != null))
-				{
-					value.CarStocks.Add(this);
-					this._CarModelID = value.CarModelID;
-				}
-				else
-				{
-					this._CarModelID = default(string);
-				}
-				this.SendPropertyChanged("CarModel");
-			}
 		}
 	}
 	
@@ -1012,6 +978,40 @@ public partial class CarStock : INotifyPropertyChanging, INotifyPropertyChanged
 					this._BranchID = default(string);
 				}
 				this.SendPropertyChanged("Branch");
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.AssociationAttribute(Name="CarModel_CarStock", Storage="_CarModel", ThisKey="CarModelID", OtherKey="CarModelID", IsForeignKey=true)]
+	public CarModel CarModel
+	{
+		get
+		{
+			return this._CarModel.Entity;
+		}
+		set
+		{
+			CarModel previousValue = this._CarModel.Entity;
+			if (((previousValue != value) 
+						|| (this._CarModel.HasLoadedOrAssignedValue == false)))
+			{
+				this.SendPropertyChanging();
+				if ((previousValue != null))
+				{
+					this._CarModel.Entity = null;
+					previousValue.CarStocks.Remove(this);
+				}
+				this._CarModel.Entity = value;
+				if ((value != null))
+				{
+					value.CarStocks.Add(this);
+					this._CarModelID = value.CarModelID;
+				}
+				else
+				{
+					this._CarModelID = default(string);
+				}
+				this.SendPropertyChanged("CarModel");
 			}
 		}
 	}
@@ -1085,7 +1085,7 @@ public partial class Customer : INotifyPropertyChanging, INotifyPropertyChanged
 		OnCreated();
 	}
 	
-	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CustomerID", DbType="NChar(10)", CanBeNull=false, IsPrimaryKey=true)]
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CustomerID", DbType="VarChar(50) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
 	public string CustomerID
 	{
 		get
@@ -1105,7 +1105,7 @@ public partial class Customer : INotifyPropertyChanging, INotifyPropertyChanged
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CustomerName", DbType="NChar(10)")]
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CustomerName", DbType="VarChar(50)")]
 	public string CustomerName
 	{
 		get
@@ -1125,7 +1125,7 @@ public partial class Customer : INotifyPropertyChanging, INotifyPropertyChanged
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NRIC", DbType="NChar(10)")]
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NRIC", DbType="VarChar(50)")]
 	public string NRIC
 	{
 		get
@@ -1145,7 +1145,7 @@ public partial class Customer : INotifyPropertyChanging, INotifyPropertyChanged
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ContactNumber", DbType="NChar(10)")]
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ContactNumber", DbType="VarChar(50)")]
 	public string ContactNumber
 	{
 		get
@@ -1243,7 +1243,7 @@ public partial class Transaction : INotifyPropertyChanging, INotifyPropertyChang
 		OnCreated();
 	}
 	
-	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TransactionID", DbType="NChar(10)", CanBeNull=false, IsPrimaryKey=true)]
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TransactionID", DbType="VarChar(50) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
 	public string TransactionID
 	{
 		get
@@ -1263,7 +1263,7 @@ public partial class Transaction : INotifyPropertyChanging, INotifyPropertyChang
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Amount", DbType="NChar(10)")]
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Amount", DbType="VarChar(50)")]
 	public string Amount
 	{
 		get
@@ -1283,7 +1283,7 @@ public partial class Transaction : INotifyPropertyChanging, INotifyPropertyChang
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FromBank", DbType="NChar(10)")]
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FromBank", DbType="VarChar(50)")]
 	public string FromBank
 	{
 		get

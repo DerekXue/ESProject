@@ -1,63 +1,63 @@
-﻿<?xml version="1.0" encoding="utf-8"?><Database Name="CPProject" Class="DataClassesDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="WebSettings" ConnectionString="Data Source=DESKTOP-BEI1D69;Initial Catalog=CPProject;Integrated Security=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="CPProjectConnectionString" Provider="System.Data.SqlClient" />
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="RDSICA" Class="DataClassesDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\RDSICA.mdf;Integrated Security=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="ConnectionString1" Provider="System.Data.SqlClient" />
   <Table Name="dbo.Booking" Member="Bookings">
     <Type Name="Booking">
-      <Column Name="BookingID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Column Name="CarStockID" Type="System.String" DbType="NChar(10)" CanBeNull="true" />
-      <Column Name="CustomerID" Type="System.String" DbType="NChar(10)" CanBeNull="true" />
-      <Column Name="TransactionID" Type="System.String" DbType="NChar(10)" CanBeNull="true" />
-      <Column Name="BorrowDate" Type="System.String" DbType="NChar(10)" CanBeNull="true" />
-      <Column Name="ReturnDate" Type="System.String" DbType="NChar(10)" CanBeNull="true" />
-      <Association Name="CarStock_Booking" Member="CarStock" ThisKey="CarStockID" OtherKey="CarStockID" Type="CarStock" IsForeignKey="true" />
-      <Association Name="Customer_Booking" Member="Customer" ThisKey="CustomerID" OtherKey="CustomerID" Type="Customer" IsForeignKey="true" />
+      <Column Name="BookingID" Type="System.String" DbType="VarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="CarStockID" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="CustomerID" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="TransactionID" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="BorrowDate" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="ReturnDate" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
       <Association Name="Transaction_Booking" Member="Transaction" ThisKey="TransactionID" OtherKey="TransactionID" Type="Transaction" IsForeignKey="true" />
+      <Association Name="Customer_Booking" Member="Customer" ThisKey="CustomerID" OtherKey="CustomerID" Type="Customer" IsForeignKey="true" />
+      <Association Name="CarStock_Booking" Member="CarStock" ThisKey="CarStockID" OtherKey="CarStockID" Type="CarStock" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.Branch" Member="Branches">
     <Type Name="Branch">
-      <Column Name="BranchID" Type="System.String" DbType="NChar(10)" IsPrimaryKey="true" CanBeNull="false" />
-      <Column Name="ContackNumber" Type="System.String" DbType="NChar(10)" CanBeNull="true" />
-      <Column Name="Address" Type="System.String" DbType="NChar(10)" CanBeNull="true" />
-      <Column Name="PersonIncharge" Type="System.String" DbType="NChar(10)" CanBeNull="true" />
+      <Column Name="BranchID" Type="System.String" DbType="VarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="ContackNumber" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Address" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="PersonIncharge" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
       <Association Name="Branch_CarStock" Member="CarStocks" ThisKey="BranchID" OtherKey="BranchID" Type="CarStock" />
     </Type>
   </Table>
   <Table Name="dbo.CarModel" Member="CarModels">
     <Type Name="CarModel">
-      <Column Name="CarModelID" Type="System.String" DbType="NChar(10)" IsPrimaryKey="true" CanBeNull="true" />
+      <Column Name="CarModelID" Type="System.String" DbType="VarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
       <Column Name="CarName" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
-      <Column Name="CarPlate" Type="System.String" DbType="NChar(10)" CanBeNull="true" />
-      <Column Name="CarCapacity" Type="System.String" DbType="NChar(10)" CanBeNull="true" />
-      <Column Name="DailyRental" Type="System.String" DbType="NChar(10)" CanBeNull="true" />
-      <Column Name="Deposit" Type="System.String" DbType="NChar(10)" CanBeNull="true" />
+      <Column Name="CarPlate" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="CarCapacity" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="DailyRental" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Deposit" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
       <Association Name="CarModel_CarStock" Member="CarStocks" ThisKey="CarModelID" OtherKey="CarModelID" Type="CarStock" />
     </Type>
   </Table>
   <Table Name="dbo.CarStock" Member="CarStocks">
     <Type Name="CarStock">
-      <Column Name="CarStockID" Type="System.String" DbType="NChar(10)" IsPrimaryKey="true" CanBeNull="false" />
-      <Column Name="BranchID" Type="System.String" DbType="NChar(10)" CanBeNull="true" />
-      <Column Name="CarModelID" Type="System.String" DbType="NChar(10)" CanBeNull="true" />
-      <Column Name="Avaliability" Type="System.String" DbType="NChar(10)" CanBeNull="true" />
+      <Column Name="CarStockID" Type="System.String" DbType="VarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="BranchID" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="CarModelID" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Avaliability" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
       <Association Name="CarStock_Booking" Member="Bookings" ThisKey="CarStockID" OtherKey="CarStockID" Type="Booking" />
-      <Association Name="CarModel_CarStock" Member="CarModel" ThisKey="CarModelID" OtherKey="CarModelID" Type="CarModel" IsForeignKey="true" />
       <Association Name="Branch_CarStock" Member="Branch" ThisKey="BranchID" OtherKey="BranchID" Type="Branch" IsForeignKey="true" />
+      <Association Name="CarModel_CarStock" Member="CarModel" ThisKey="CarModelID" OtherKey="CarModelID" Type="CarModel" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.Customer" Member="Customers">
     <Type Name="Customer">
-      <Column Name="CustomerID" Type="System.String" DbType="NChar(10)" IsPrimaryKey="true" CanBeNull="false" />
-      <Column Name="CustomerName" Type="System.String" DbType="NChar(10)" CanBeNull="true" />
-      <Column Name="NRIC" Type="System.String" DbType="NChar(10)" CanBeNull="true" />
-      <Column Name="ContactNumber" Type="System.String" DbType="NChar(10)" CanBeNull="true" />
+      <Column Name="CustomerID" Type="System.String" DbType="VarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="CustomerName" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="NRIC" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="ContactNumber" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
       <Association Name="Customer_Booking" Member="Bookings" ThisKey="CustomerID" OtherKey="CustomerID" Type="Booking" />
     </Type>
   </Table>
   <Table Name="dbo.[Transaction]" Member="Transactions">
     <Type Name="Transaction">
-      <Column Name="TransactionID" Type="System.String" DbType="NChar(10)" IsPrimaryKey="true" CanBeNull="false" />
-      <Column Name="Amount" Type="System.String" DbType="NChar(10)" CanBeNull="true" />
-      <Column Name="FromBank" Type="System.String" DbType="NChar(10)" CanBeNull="true" />
+      <Column Name="TransactionID" Type="System.String" DbType="VarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Amount" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="FromBank" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
       <Association Name="Transaction_Booking" Member="Bookings" ThisKey="TransactionID" OtherKey="TransactionID" Type="Booking" />
     </Type>
   </Table>
