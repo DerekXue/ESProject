@@ -32,21 +32,21 @@ public partial class DataClassesDataContext : System.Data.Linq.DataContext
   partial void InsertTransaction(Transaction instance);
   partial void UpdateTransaction(Transaction instance);
   partial void DeleteTransaction(Transaction instance);
-  partial void InsertBooking(Booking instance);
-  partial void UpdateBooking(Booking instance);
-  partial void DeleteBooking(Booking instance);
   partial void InsertBranch(Branch instance);
   partial void UpdateBranch(Branch instance);
   partial void DeleteBranch(Branch instance);
   partial void InsertCarModel(CarModel instance);
   partial void UpdateCarModel(CarModel instance);
   partial void DeleteCarModel(CarModel instance);
-  partial void InsertCarStock(CarStock instance);
-  partial void UpdateCarStock(CarStock instance);
-  partial void DeleteCarStock(CarStock instance);
   partial void InsertCustomer(Customer instance);
   partial void UpdateCustomer(Customer instance);
   partial void DeleteCustomer(Customer instance);
+  partial void InsertCarStock(CarStock instance);
+  partial void UpdateCarStock(CarStock instance);
+  partial void DeleteCarStock(CarStock instance);
+  partial void InsertBooking(Booking instance);
+  partial void UpdateBooking(Booking instance);
+  partial void DeleteBooking(Booking instance);
   #endregion
 	
 	public DataClassesDataContext() : 
@@ -87,14 +87,6 @@ public partial class DataClassesDataContext : System.Data.Linq.DataContext
 		}
 	}
 	
-	public System.Data.Linq.Table<Booking> Bookings
-	{
-		get
-		{
-			return this.GetTable<Booking>();
-		}
-	}
-	
 	public System.Data.Linq.Table<Branch> Branches
 	{
 		get
@@ -111,6 +103,14 @@ public partial class DataClassesDataContext : System.Data.Linq.DataContext
 		}
 	}
 	
+	public System.Data.Linq.Table<Customer> Customers
+	{
+		get
+		{
+			return this.GetTable<Customer>();
+		}
+	}
+	
 	public System.Data.Linq.Table<CarStock> CarStocks
 	{
 		get
@@ -119,11 +119,11 @@ public partial class DataClassesDataContext : System.Data.Linq.DataContext
 		}
 	}
 	
-	public System.Data.Linq.Table<Customer> Customers
+	public System.Data.Linq.Table<Booking> Bookings
 	{
 		get
 		{
-			return this.GetTable<Customer>();
+			return this.GetTable<Booking>();
 		}
 	}
 }
@@ -287,335 +287,6 @@ public partial class Transaction : INotifyPropertyChanging, INotifyPropertyChang
 	{
 		this.SendPropertyChanging();
 		entity.Transaction = null;
-	}
-}
-
-[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Booking")]
-public partial class Booking : INotifyPropertyChanging, INotifyPropertyChanged
-{
-	
-	private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-	
-	private string _BookingID;
-	
-	private string _BookingUniqueID;
-	
-	private string _CarStockID;
-	
-	private string _CustomerID;
-	
-	private string _TransactionID;
-	
-	private string _BorrowDate;
-	
-	private string _ReturnDate;
-	
-	private EntityRef<Transaction> _Transaction;
-	
-	private EntityRef<Customer> _Customer;
-	
-	private EntityRef<CarStock> _CarStock;
-	
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnBookingIDChanging(string value);
-    partial void OnBookingIDChanged();
-    partial void OnBookingUniqueIDChanging(string value);
-    partial void OnBookingUniqueIDChanged();
-    partial void OnCarStockIDChanging(string value);
-    partial void OnCarStockIDChanged();
-    partial void OnCustomerIDChanging(string value);
-    partial void OnCustomerIDChanged();
-    partial void OnTransactionIDChanging(string value);
-    partial void OnTransactionIDChanged();
-    partial void OnBorrowDateChanging(string value);
-    partial void OnBorrowDateChanged();
-    partial void OnReturnDateChanging(string value);
-    partial void OnReturnDateChanged();
-    #endregion
-	
-	public Booking()
-	{
-		this._Transaction = default(EntityRef<Transaction>);
-		this._Customer = default(EntityRef<Customer>);
-		this._CarStock = default(EntityRef<CarStock>);
-		OnCreated();
-	}
-	
-	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BookingID", DbType="VarChar(50) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
-	public string BookingID
-	{
-		get
-		{
-			return this._BookingID;
-		}
-		set
-		{
-			if ((this._BookingID != value))
-			{
-				this.OnBookingIDChanging(value);
-				this.SendPropertyChanging();
-				this._BookingID = value;
-				this.SendPropertyChanged("BookingID");
-				this.OnBookingIDChanged();
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BookingUniqueID", DbType="VarChar(50)")]
-	public string BookingUniqueID
-	{
-		get
-		{
-			return this._BookingUniqueID;
-		}
-		set
-		{
-			if ((this._BookingUniqueID != value))
-			{
-				this.OnBookingUniqueIDChanging(value);
-				this.SendPropertyChanging();
-				this._BookingUniqueID = value;
-				this.SendPropertyChanged("BookingUniqueID");
-				this.OnBookingUniqueIDChanged();
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CarStockID", DbType="VarChar(50)")]
-	public string CarStockID
-	{
-		get
-		{
-			return this._CarStockID;
-		}
-		set
-		{
-			if ((this._CarStockID != value))
-			{
-				if (this._CarStock.HasLoadedOrAssignedValue)
-				{
-					throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-				}
-				this.OnCarStockIDChanging(value);
-				this.SendPropertyChanging();
-				this._CarStockID = value;
-				this.SendPropertyChanged("CarStockID");
-				this.OnCarStockIDChanged();
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CustomerID", DbType="VarChar(50)")]
-	public string CustomerID
-	{
-		get
-		{
-			return this._CustomerID;
-		}
-		set
-		{
-			if ((this._CustomerID != value))
-			{
-				if (this._Customer.HasLoadedOrAssignedValue)
-				{
-					throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-				}
-				this.OnCustomerIDChanging(value);
-				this.SendPropertyChanging();
-				this._CustomerID = value;
-				this.SendPropertyChanged("CustomerID");
-				this.OnCustomerIDChanged();
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TransactionID", DbType="VarChar(50)")]
-	public string TransactionID
-	{
-		get
-		{
-			return this._TransactionID;
-		}
-		set
-		{
-			if ((this._TransactionID != value))
-			{
-				if (this._Transaction.HasLoadedOrAssignedValue)
-				{
-					throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-				}
-				this.OnTransactionIDChanging(value);
-				this.SendPropertyChanging();
-				this._TransactionID = value;
-				this.SendPropertyChanged("TransactionID");
-				this.OnTransactionIDChanged();
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BorrowDate", DbType="VarChar(50)")]
-	public string BorrowDate
-	{
-		get
-		{
-			return this._BorrowDate;
-		}
-		set
-		{
-			if ((this._BorrowDate != value))
-			{
-				this.OnBorrowDateChanging(value);
-				this.SendPropertyChanging();
-				this._BorrowDate = value;
-				this.SendPropertyChanged("BorrowDate");
-				this.OnBorrowDateChanged();
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ReturnDate", DbType="VarChar(50)")]
-	public string ReturnDate
-	{
-		get
-		{
-			return this._ReturnDate;
-		}
-		set
-		{
-			if ((this._ReturnDate != value))
-			{
-				this.OnReturnDateChanging(value);
-				this.SendPropertyChanging();
-				this._ReturnDate = value;
-				this.SendPropertyChanged("ReturnDate");
-				this.OnReturnDateChanged();
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Transaction_Booking", Storage="_Transaction", ThisKey="TransactionID", OtherKey="TransactionID", IsForeignKey=true)]
-	public Transaction Transaction
-	{
-		get
-		{
-			return this._Transaction.Entity;
-		}
-		set
-		{
-			Transaction previousValue = this._Transaction.Entity;
-			if (((previousValue != value) 
-						|| (this._Transaction.HasLoadedOrAssignedValue == false)))
-			{
-				this.SendPropertyChanging();
-				if ((previousValue != null))
-				{
-					this._Transaction.Entity = null;
-					previousValue.Bookings.Remove(this);
-				}
-				this._Transaction.Entity = value;
-				if ((value != null))
-				{
-					value.Bookings.Add(this);
-					this._TransactionID = value.TransactionID;
-				}
-				else
-				{
-					this._TransactionID = default(string);
-				}
-				this.SendPropertyChanged("Transaction");
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Customer_Booking", Storage="_Customer", ThisKey="CustomerID", OtherKey="CustomerID", IsForeignKey=true)]
-	public Customer Customer
-	{
-		get
-		{
-			return this._Customer.Entity;
-		}
-		set
-		{
-			Customer previousValue = this._Customer.Entity;
-			if (((previousValue != value) 
-						|| (this._Customer.HasLoadedOrAssignedValue == false)))
-			{
-				this.SendPropertyChanging();
-				if ((previousValue != null))
-				{
-					this._Customer.Entity = null;
-					previousValue.Bookings.Remove(this);
-				}
-				this._Customer.Entity = value;
-				if ((value != null))
-				{
-					value.Bookings.Add(this);
-					this._CustomerID = value.CustomerID;
-				}
-				else
-				{
-					this._CustomerID = default(string);
-				}
-				this.SendPropertyChanged("Customer");
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.AssociationAttribute(Name="CarStock_Booking", Storage="_CarStock", ThisKey="CarStockID", OtherKey="CarStockID", IsForeignKey=true)]
-	public CarStock CarStock
-	{
-		get
-		{
-			return this._CarStock.Entity;
-		}
-		set
-		{
-			CarStock previousValue = this._CarStock.Entity;
-			if (((previousValue != value) 
-						|| (this._CarStock.HasLoadedOrAssignedValue == false)))
-			{
-				this.SendPropertyChanging();
-				if ((previousValue != null))
-				{
-					this._CarStock.Entity = null;
-					previousValue.Bookings.Remove(this);
-				}
-				this._CarStock.Entity = value;
-				if ((value != null))
-				{
-					value.Bookings.Add(this);
-					this._CarStockID = value.CarStockID;
-				}
-				else
-				{
-					this._CarStockID = default(string);
-				}
-				this.SendPropertyChanged("CarStock");
-			}
-		}
-	}
-	
-	public event PropertyChangingEventHandler PropertyChanging;
-	
-	public event PropertyChangedEventHandler PropertyChanged;
-	
-	protected virtual void SendPropertyChanging()
-	{
-		if ((this.PropertyChanging != null))
-		{
-			this.PropertyChanging(this, emptyChangingEventArgs);
-		}
-	}
-	
-	protected virtual void SendPropertyChanged(String propertyName)
-	{
-		if ((this.PropertyChanged != null))
-		{
-			this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-		}
 	}
 }
 
@@ -993,7 +664,7 @@ public partial class CarModel : INotifyPropertyChanging, INotifyPropertyChanged
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.AssociationAttribute(Name="CarModel_CarStock", Storage="_CarStocks", ThisKey="CarModelID", OtherKey="CarStockID")]
+	[global::System.Data.Linq.Mapping.AssociationAttribute(Name="CarModel_CarStock", Storage="_CarStocks", ThisKey="CarModelID", OtherKey="CarModelID")]
 	public EntitySet<CarStock> CarStocks
 	{
 		get
@@ -1036,274 +707,6 @@ public partial class CarModel : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		this.SendPropertyChanging();
 		entity.CarModel = null;
-	}
-}
-
-[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.CarStock")]
-public partial class CarStock : INotifyPropertyChanging, INotifyPropertyChanged
-{
-	
-	private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-	
-	private string _CarStockID;
-	
-	private string _CarStockUniqueID;
-	
-	private string _BranchID;
-	
-	private string _CarModelID;
-	
-	private string _Avaliability;
-	
-	private EntitySet<Booking> _Bookings;
-	
-	private EntityRef<Branch> _Branch;
-	
-	private EntityRef<CarModel> _CarModel;
-	
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnCarStockIDChanging(string value);
-    partial void OnCarStockIDChanged();
-    partial void OnCarStockUniqueIDChanging(string value);
-    partial void OnCarStockUniqueIDChanged();
-    partial void OnBranchIDChanging(string value);
-    partial void OnBranchIDChanged();
-    partial void OnCarModelIDChanging(string value);
-    partial void OnCarModelIDChanged();
-    partial void OnAvaliabilityChanging(string value);
-    partial void OnAvaliabilityChanged();
-    #endregion
-	
-	public CarStock()
-	{
-		this._Bookings = new EntitySet<Booking>(new Action<Booking>(this.attach_Bookings), new Action<Booking>(this.detach_Bookings));
-		this._Branch = default(EntityRef<Branch>);
-		this._CarModel = default(EntityRef<CarModel>);
-		OnCreated();
-	}
-	
-	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CarStockID", DbType="VarChar(50) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
-	public string CarStockID
-	{
-		get
-		{
-			return this._CarStockID;
-		}
-		set
-		{
-			if ((this._CarStockID != value))
-			{
-				if (this._CarModel.HasLoadedOrAssignedValue)
-				{
-					throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-				}
-				this.OnCarStockIDChanging(value);
-				this.SendPropertyChanging();
-				this._CarStockID = value;
-				this.SendPropertyChanged("CarStockID");
-				this.OnCarStockIDChanged();
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CarStockUniqueID", DbType="VarChar(50)")]
-	public string CarStockUniqueID
-	{
-		get
-		{
-			return this._CarStockUniqueID;
-		}
-		set
-		{
-			if ((this._CarStockUniqueID != value))
-			{
-				this.OnCarStockUniqueIDChanging(value);
-				this.SendPropertyChanging();
-				this._CarStockUniqueID = value;
-				this.SendPropertyChanged("CarStockUniqueID");
-				this.OnCarStockUniqueIDChanged();
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BranchID", DbType="VarChar(50)")]
-	public string BranchID
-	{
-		get
-		{
-			return this._BranchID;
-		}
-		set
-		{
-			if ((this._BranchID != value))
-			{
-				if (this._Branch.HasLoadedOrAssignedValue)
-				{
-					throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-				}
-				this.OnBranchIDChanging(value);
-				this.SendPropertyChanging();
-				this._BranchID = value;
-				this.SendPropertyChanged("BranchID");
-				this.OnBranchIDChanged();
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CarModelID", DbType="VarChar(50)")]
-	public string CarModelID
-	{
-		get
-		{
-			return this._CarModelID;
-		}
-		set
-		{
-			if ((this._CarModelID != value))
-			{
-				this.OnCarModelIDChanging(value);
-				this.SendPropertyChanging();
-				this._CarModelID = value;
-				this.SendPropertyChanged("CarModelID");
-				this.OnCarModelIDChanged();
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Avaliability", DbType="VarChar(50)")]
-	public string Avaliability
-	{
-		get
-		{
-			return this._Avaliability;
-		}
-		set
-		{
-			if ((this._Avaliability != value))
-			{
-				this.OnAvaliabilityChanging(value);
-				this.SendPropertyChanging();
-				this._Avaliability = value;
-				this.SendPropertyChanged("Avaliability");
-				this.OnAvaliabilityChanged();
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.AssociationAttribute(Name="CarStock_Booking", Storage="_Bookings", ThisKey="CarStockID", OtherKey="CarStockID")]
-	public EntitySet<Booking> Bookings
-	{
-		get
-		{
-			return this._Bookings;
-		}
-		set
-		{
-			this._Bookings.Assign(value);
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Branch_CarStock", Storage="_Branch", ThisKey="BranchID", OtherKey="BranchID", IsForeignKey=true)]
-	public Branch Branch
-	{
-		get
-		{
-			return this._Branch.Entity;
-		}
-		set
-		{
-			Branch previousValue = this._Branch.Entity;
-			if (((previousValue != value) 
-						|| (this._Branch.HasLoadedOrAssignedValue == false)))
-			{
-				this.SendPropertyChanging();
-				if ((previousValue != null))
-				{
-					this._Branch.Entity = null;
-					previousValue.CarStocks.Remove(this);
-				}
-				this._Branch.Entity = value;
-				if ((value != null))
-				{
-					value.CarStocks.Add(this);
-					this._BranchID = value.BranchID;
-				}
-				else
-				{
-					this._BranchID = default(string);
-				}
-				this.SendPropertyChanged("Branch");
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.AssociationAttribute(Name="CarModel_CarStock", Storage="_CarModel", ThisKey="CarStockID", OtherKey="CarModelID", IsForeignKey=true)]
-	public CarModel CarModel
-	{
-		get
-		{
-			return this._CarModel.Entity;
-		}
-		set
-		{
-			CarModel previousValue = this._CarModel.Entity;
-			if (((previousValue != value) 
-						|| (this._CarModel.HasLoadedOrAssignedValue == false)))
-			{
-				this.SendPropertyChanging();
-				if ((previousValue != null))
-				{
-					this._CarModel.Entity = null;
-					previousValue.CarStocks.Remove(this);
-				}
-				this._CarModel.Entity = value;
-				if ((value != null))
-				{
-					value.CarStocks.Add(this);
-					this._CarStockID = value.CarModelID;
-				}
-				else
-				{
-					this._CarStockID = default(string);
-				}
-				this.SendPropertyChanged("CarModel");
-			}
-		}
-	}
-	
-	public event PropertyChangingEventHandler PropertyChanging;
-	
-	public event PropertyChangedEventHandler PropertyChanged;
-	
-	protected virtual void SendPropertyChanging()
-	{
-		if ((this.PropertyChanging != null))
-		{
-			this.PropertyChanging(this, emptyChangingEventArgs);
-		}
-	}
-	
-	protected virtual void SendPropertyChanged(String propertyName)
-	{
-		if ((this.PropertyChanged != null))
-		{
-			this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-		}
-	}
-	
-	private void attach_Bookings(Booking entity)
-	{
-		this.SendPropertyChanging();
-		entity.CarStock = this;
-	}
-	
-	private void detach_Bookings(Booking entity)
-	{
-		this.SendPropertyChanging();
-		entity.CarStock = null;
 	}
 }
 
@@ -1490,6 +893,627 @@ public partial class Customer : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		this.SendPropertyChanging();
 		entity.Customer = null;
+	}
+}
+
+[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.CarStock")]
+public partial class CarStock : INotifyPropertyChanging, INotifyPropertyChanged
+{
+	
+	private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+	
+	private string _CarStockID;
+	
+	private string _CarStockUniqueID;
+	
+	private string _BranchID;
+	
+	private string _CarModelID;
+	
+	private string _Avaliability;
+	
+	private EntitySet<Booking> _Bookings;
+	
+	private EntityRef<CarModel> _CarModel;
+	
+	private EntityRef<Branch> _Branch;
+	
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnCarStockIDChanging(string value);
+    partial void OnCarStockIDChanged();
+    partial void OnCarStockUniqueIDChanging(string value);
+    partial void OnCarStockUniqueIDChanged();
+    partial void OnBranchIDChanging(string value);
+    partial void OnBranchIDChanged();
+    partial void OnCarModelIDChanging(string value);
+    partial void OnCarModelIDChanged();
+    partial void OnAvaliabilityChanging(string value);
+    partial void OnAvaliabilityChanged();
+    #endregion
+	
+	public CarStock()
+	{
+		this._Bookings = new EntitySet<Booking>(new Action<Booking>(this.attach_Bookings), new Action<Booking>(this.detach_Bookings));
+		this._CarModel = default(EntityRef<CarModel>);
+		this._Branch = default(EntityRef<Branch>);
+		OnCreated();
+	}
+	
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CarStockID", DbType="VarChar(50) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
+	public string CarStockID
+	{
+		get
+		{
+			return this._CarStockID;
+		}
+		set
+		{
+			if ((this._CarStockID != value))
+			{
+				this.OnCarStockIDChanging(value);
+				this.SendPropertyChanging();
+				this._CarStockID = value;
+				this.SendPropertyChanged("CarStockID");
+				this.OnCarStockIDChanged();
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CarStockUniqueID", DbType="VarChar(50)")]
+	public string CarStockUniqueID
+	{
+		get
+		{
+			return this._CarStockUniqueID;
+		}
+		set
+		{
+			if ((this._CarStockUniqueID != value))
+			{
+				this.OnCarStockUniqueIDChanging(value);
+				this.SendPropertyChanging();
+				this._CarStockUniqueID = value;
+				this.SendPropertyChanged("CarStockUniqueID");
+				this.OnCarStockUniqueIDChanged();
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BranchID", DbType="VarChar(50)")]
+	public string BranchID
+	{
+		get
+		{
+			return this._BranchID;
+		}
+		set
+		{
+			if ((this._BranchID != value))
+			{
+				if (this._Branch.HasLoadedOrAssignedValue)
+				{
+					throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+				}
+				this.OnBranchIDChanging(value);
+				this.SendPropertyChanging();
+				this._BranchID = value;
+				this.SendPropertyChanged("BranchID");
+				this.OnBranchIDChanged();
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CarModelID", DbType="VarChar(50)")]
+	public string CarModelID
+	{
+		get
+		{
+			return this._CarModelID;
+		}
+		set
+		{
+			if ((this._CarModelID != value))
+			{
+				if (this._CarModel.HasLoadedOrAssignedValue)
+				{
+					throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+				}
+				this.OnCarModelIDChanging(value);
+				this.SendPropertyChanging();
+				this._CarModelID = value;
+				this.SendPropertyChanged("CarModelID");
+				this.OnCarModelIDChanged();
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Avaliability", DbType="VarChar(50)")]
+	public string Avaliability
+	{
+		get
+		{
+			return this._Avaliability;
+		}
+		set
+		{
+			if ((this._Avaliability != value))
+			{
+				this.OnAvaliabilityChanging(value);
+				this.SendPropertyChanging();
+				this._Avaliability = value;
+				this.SendPropertyChanged("Avaliability");
+				this.OnAvaliabilityChanged();
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.AssociationAttribute(Name="CarStock_Booking", Storage="_Bookings", ThisKey="CarStockID", OtherKey="CarStockID")]
+	public EntitySet<Booking> Bookings
+	{
+		get
+		{
+			return this._Bookings;
+		}
+		set
+		{
+			this._Bookings.Assign(value);
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.AssociationAttribute(Name="CarModel_CarStock", Storage="_CarModel", ThisKey="CarModelID", OtherKey="CarModelID", IsForeignKey=true)]
+	public CarModel CarModel
+	{
+		get
+		{
+			return this._CarModel.Entity;
+		}
+		set
+		{
+			CarModel previousValue = this._CarModel.Entity;
+			if (((previousValue != value) 
+						|| (this._CarModel.HasLoadedOrAssignedValue == false)))
+			{
+				this.SendPropertyChanging();
+				if ((previousValue != null))
+				{
+					this._CarModel.Entity = null;
+					previousValue.CarStocks.Remove(this);
+				}
+				this._CarModel.Entity = value;
+				if ((value != null))
+				{
+					value.CarStocks.Add(this);
+					this._CarModelID = value.CarModelID;
+				}
+				else
+				{
+					this._CarModelID = default(string);
+				}
+				this.SendPropertyChanged("CarModel");
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Branch_CarStock", Storage="_Branch", ThisKey="BranchID", OtherKey="BranchID", IsForeignKey=true)]
+	public Branch Branch
+	{
+		get
+		{
+			return this._Branch.Entity;
+		}
+		set
+		{
+			Branch previousValue = this._Branch.Entity;
+			if (((previousValue != value) 
+						|| (this._Branch.HasLoadedOrAssignedValue == false)))
+			{
+				this.SendPropertyChanging();
+				if ((previousValue != null))
+				{
+					this._Branch.Entity = null;
+					previousValue.CarStocks.Remove(this);
+				}
+				this._Branch.Entity = value;
+				if ((value != null))
+				{
+					value.CarStocks.Add(this);
+					this._BranchID = value.BranchID;
+				}
+				else
+				{
+					this._BranchID = default(string);
+				}
+				this.SendPropertyChanged("Branch");
+			}
+		}
+	}
+	
+	public event PropertyChangingEventHandler PropertyChanging;
+	
+	public event PropertyChangedEventHandler PropertyChanged;
+	
+	protected virtual void SendPropertyChanging()
+	{
+		if ((this.PropertyChanging != null))
+		{
+			this.PropertyChanging(this, emptyChangingEventArgs);
+		}
+	}
+	
+	protected virtual void SendPropertyChanged(String propertyName)
+	{
+		if ((this.PropertyChanged != null))
+		{
+			this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+		}
+	}
+	
+	private void attach_Bookings(Booking entity)
+	{
+		this.SendPropertyChanging();
+		entity.CarStock = this;
+	}
+	
+	private void detach_Bookings(Booking entity)
+	{
+		this.SendPropertyChanging();
+		entity.CarStock = null;
+	}
+}
+
+[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Booking")]
+public partial class Booking : INotifyPropertyChanging, INotifyPropertyChanged
+{
+	
+	private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+	
+	private string _BookingID;
+	
+	private string _BookingUniqueID;
+	
+	private string _CarStockID;
+	
+	private string _CustomerID;
+	
+	private string _TransactionID;
+	
+	private string _BorrowDate;
+	
+	private string _ReturnDate;
+	
+	private string _IfReturned;
+	
+	private EntityRef<Transaction> _Transaction;
+	
+	private EntityRef<Customer> _Customer;
+	
+	private EntityRef<CarStock> _CarStock;
+	
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnBookingIDChanging(string value);
+    partial void OnBookingIDChanged();
+    partial void OnBookingUniqueIDChanging(string value);
+    partial void OnBookingUniqueIDChanged();
+    partial void OnCarStockIDChanging(string value);
+    partial void OnCarStockIDChanged();
+    partial void OnCustomerIDChanging(string value);
+    partial void OnCustomerIDChanged();
+    partial void OnTransactionIDChanging(string value);
+    partial void OnTransactionIDChanged();
+    partial void OnBorrowDateChanging(string value);
+    partial void OnBorrowDateChanged();
+    partial void OnReturnDateChanging(string value);
+    partial void OnReturnDateChanged();
+    partial void OnIfReturnedChanging(string value);
+    partial void OnIfReturnedChanged();
+    #endregion
+	
+	public Booking()
+	{
+		this._Transaction = default(EntityRef<Transaction>);
+		this._Customer = default(EntityRef<Customer>);
+		this._CarStock = default(EntityRef<CarStock>);
+		OnCreated();
+	}
+	
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BookingID", DbType="VarChar(50) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
+	public string BookingID
+	{
+		get
+		{
+			return this._BookingID;
+		}
+		set
+		{
+			if ((this._BookingID != value))
+			{
+				this.OnBookingIDChanging(value);
+				this.SendPropertyChanging();
+				this._BookingID = value;
+				this.SendPropertyChanged("BookingID");
+				this.OnBookingIDChanged();
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BookingUniqueID", DbType="VarChar(50)")]
+	public string BookingUniqueID
+	{
+		get
+		{
+			return this._BookingUniqueID;
+		}
+		set
+		{
+			if ((this._BookingUniqueID != value))
+			{
+				this.OnBookingUniqueIDChanging(value);
+				this.SendPropertyChanging();
+				this._BookingUniqueID = value;
+				this.SendPropertyChanged("BookingUniqueID");
+				this.OnBookingUniqueIDChanged();
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CarStockID", DbType="VarChar(50)")]
+	public string CarStockID
+	{
+		get
+		{
+			return this._CarStockID;
+		}
+		set
+		{
+			if ((this._CarStockID != value))
+			{
+				if (this._CarStock.HasLoadedOrAssignedValue)
+				{
+					throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+				}
+				this.OnCarStockIDChanging(value);
+				this.SendPropertyChanging();
+				this._CarStockID = value;
+				this.SendPropertyChanged("CarStockID");
+				this.OnCarStockIDChanged();
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CustomerID", DbType="VarChar(50)")]
+	public string CustomerID
+	{
+		get
+		{
+			return this._CustomerID;
+		}
+		set
+		{
+			if ((this._CustomerID != value))
+			{
+				if (this._Customer.HasLoadedOrAssignedValue)
+				{
+					throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+				}
+				this.OnCustomerIDChanging(value);
+				this.SendPropertyChanging();
+				this._CustomerID = value;
+				this.SendPropertyChanged("CustomerID");
+				this.OnCustomerIDChanged();
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TransactionID", DbType="VarChar(50)")]
+	public string TransactionID
+	{
+		get
+		{
+			return this._TransactionID;
+		}
+		set
+		{
+			if ((this._TransactionID != value))
+			{
+				if (this._Transaction.HasLoadedOrAssignedValue)
+				{
+					throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+				}
+				this.OnTransactionIDChanging(value);
+				this.SendPropertyChanging();
+				this._TransactionID = value;
+				this.SendPropertyChanged("TransactionID");
+				this.OnTransactionIDChanged();
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BorrowDate", DbType="VarChar(50)")]
+	public string BorrowDate
+	{
+		get
+		{
+			return this._BorrowDate;
+		}
+		set
+		{
+			if ((this._BorrowDate != value))
+			{
+				this.OnBorrowDateChanging(value);
+				this.SendPropertyChanging();
+				this._BorrowDate = value;
+				this.SendPropertyChanged("BorrowDate");
+				this.OnBorrowDateChanged();
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ReturnDate", DbType="VarChar(50)")]
+	public string ReturnDate
+	{
+		get
+		{
+			return this._ReturnDate;
+		}
+		set
+		{
+			if ((this._ReturnDate != value))
+			{
+				this.OnReturnDateChanging(value);
+				this.SendPropertyChanging();
+				this._ReturnDate = value;
+				this.SendPropertyChanged("ReturnDate");
+				this.OnReturnDateChanged();
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IfReturned", DbType="VarChar(50)")]
+	public string IfReturned
+	{
+		get
+		{
+			return this._IfReturned;
+		}
+		set
+		{
+			if ((this._IfReturned != value))
+			{
+				this.OnIfReturnedChanging(value);
+				this.SendPropertyChanging();
+				this._IfReturned = value;
+				this.SendPropertyChanged("IfReturned");
+				this.OnIfReturnedChanged();
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Transaction_Booking", Storage="_Transaction", ThisKey="TransactionID", OtherKey="TransactionID", IsForeignKey=true)]
+	public Transaction Transaction
+	{
+		get
+		{
+			return this._Transaction.Entity;
+		}
+		set
+		{
+			Transaction previousValue = this._Transaction.Entity;
+			if (((previousValue != value) 
+						|| (this._Transaction.HasLoadedOrAssignedValue == false)))
+			{
+				this.SendPropertyChanging();
+				if ((previousValue != null))
+				{
+					this._Transaction.Entity = null;
+					previousValue.Bookings.Remove(this);
+				}
+				this._Transaction.Entity = value;
+				if ((value != null))
+				{
+					value.Bookings.Add(this);
+					this._TransactionID = value.TransactionID;
+				}
+				else
+				{
+					this._TransactionID = default(string);
+				}
+				this.SendPropertyChanged("Transaction");
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Customer_Booking", Storage="_Customer", ThisKey="CustomerID", OtherKey="CustomerID", IsForeignKey=true)]
+	public Customer Customer
+	{
+		get
+		{
+			return this._Customer.Entity;
+		}
+		set
+		{
+			Customer previousValue = this._Customer.Entity;
+			if (((previousValue != value) 
+						|| (this._Customer.HasLoadedOrAssignedValue == false)))
+			{
+				this.SendPropertyChanging();
+				if ((previousValue != null))
+				{
+					this._Customer.Entity = null;
+					previousValue.Bookings.Remove(this);
+				}
+				this._Customer.Entity = value;
+				if ((value != null))
+				{
+					value.Bookings.Add(this);
+					this._CustomerID = value.CustomerID;
+				}
+				else
+				{
+					this._CustomerID = default(string);
+				}
+				this.SendPropertyChanged("Customer");
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.AssociationAttribute(Name="CarStock_Booking", Storage="_CarStock", ThisKey="CarStockID", OtherKey="CarStockID", IsForeignKey=true)]
+	public CarStock CarStock
+	{
+		get
+		{
+			return this._CarStock.Entity;
+		}
+		set
+		{
+			CarStock previousValue = this._CarStock.Entity;
+			if (((previousValue != value) 
+						|| (this._CarStock.HasLoadedOrAssignedValue == false)))
+			{
+				this.SendPropertyChanging();
+				if ((previousValue != null))
+				{
+					this._CarStock.Entity = null;
+					previousValue.Bookings.Remove(this);
+				}
+				this._CarStock.Entity = value;
+				if ((value != null))
+				{
+					value.Bookings.Add(this);
+					this._CarStockID = value.CarStockID;
+				}
+				else
+				{
+					this._CarStockID = default(string);
+				}
+				this.SendPropertyChanged("CarStock");
+			}
+		}
+	}
+	
+	public event PropertyChangingEventHandler PropertyChanging;
+	
+	public event PropertyChangedEventHandler PropertyChanged;
+	
+	protected virtual void SendPropertyChanging()
+	{
+		if ((this.PropertyChanging != null))
+		{
+			this.PropertyChanging(this, emptyChangingEventArgs);
+		}
+	}
+	
+	protected virtual void SendPropertyChanged(String propertyName)
+	{
+		if ((this.PropertyChanged != null))
+		{
+			this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+		}
 	}
 }
 #pragma warning restore 1591
